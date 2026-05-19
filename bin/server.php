@@ -8,6 +8,7 @@ use App\BroadcastServer;
 
 $port = 8080;
 
+// Explicitly binding to 0.0.0.0 so Docker exposes it correctly
 $server = IoServer::factory(
     new HttpServer(
         new WsServer(
@@ -15,7 +16,7 @@ $server = IoServer::factory(
         )
     ),
     $port,
-    '127.0.0.1'
+    '0.0.0.0'
 );
 
 echo "Starting WebSocket broadcast server on port {$port}...\n";
