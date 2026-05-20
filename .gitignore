@@ -1,0 +1,10 @@
+# Hassas config
+config/config.php
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Composer
+vendor/
+composer.lock
