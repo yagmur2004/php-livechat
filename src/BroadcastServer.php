@@ -17,15 +17,18 @@ class BroadcastServer implements MessageComponentInterface {
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
+        // JSON parse et
+        $data = json_decode($msg, true);
+
+        if (!$data || !isset($data['type'])) {
+            $from->send(json_encode(['error' => 'Geçersiz mesaj formatı']));
+            return;
+        }
+
         echo "Broadcast message from {$from->resourceId}: $msg\n";
+
         foreach ($this->clients as $client) {
-            // Broadcasting to all connected clients
             $client->send($msg);
-            
-            // If you want to broadcast to everyone EXCEPT the sender, use this instead:
-            // if ($from !== $client) {
-            //     $client->send($msg);
-            // }
         }
     }
 
