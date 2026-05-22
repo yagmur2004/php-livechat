@@ -1,0 +1,7 @@
+authtoken: ${NGROK_AUTHTOKEN}
+tunnels:
+  websocket:
+    proto: http
+    addr: 8080
+    host_header: localhost:8080
+    inspect: false
