@@ -1,0 +1,12 @@
+{
+    "name": "project/websocket-broadcast",
+    "description": "WebSocket Broadcast Server using Ratchet",
+    "require": {
+        "cboden/ratchet": "^0.4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

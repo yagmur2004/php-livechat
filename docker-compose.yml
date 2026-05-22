@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  websocket-server:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - /app/vendor # keep vendor folder in container and avoid overwriting with host volume
+
+  # Add a simple web server to serve the test client
+  test-ui:
+    image: nginx:alpine
+    ports:
+      - "8081:80"
+    volumes:
+      - ./test-client.html:/usr/share/nginx/html/index.html
