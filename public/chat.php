@@ -12,8 +12,8 @@
  * Bu sayfa tam olarak bu formatı gönderir.
  * WebSocket URL'si: ws://localhost:8080  (Kişi 1'in server.php port 8080'de açıyor)
  */
-
-require_once __DIR__ . '/../auth/auth_check.php';  // $currentUser set eder, yoksa login'e atar
+equire_once __DIR__ . '/../auh/auth_check.php';  // $currentUser set eder, yoksa login'e atar
+require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../database/Database.php';
 require_once __DIR__ . '/../database/repositories/RoomRepository.php';
