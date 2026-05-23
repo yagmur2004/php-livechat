@@ -5,9 +5,9 @@
  * Ana chat sayfası — korumalı.
  *
  * Kişi 1'in BroadcastServer.php'si şu mesaj tiplerini bekliyor:
- *   { "type": "message", "room_id": 1, "user_id": 5, "text": "..." }
- *   { "type": "join",    "room_id": 1, "user_id": 5 }
- *   { "type": "leave",   "room_id": 1, "user_id": 5 }
+ * { "type": "message", "room_id": 1, "user_id": 5, "text": "..." }
+ * { "type": "join",    "room_id": 1, "user_id": 5 }
+ * { "type": "leave",   "room_id": 1, "user_id": 5 }
  *
  * Bu sayfa tam olarak bu formatı gönderir.
  * WebSocket URL'si: ws://localhost:8080  (Kişi 1'in server.php port 8080'de açıyor)
@@ -76,6 +76,7 @@ if ($activeRoomId) {
 
         /* ── Messages ── */
         .messages { flex: 1; overflow-y: auto; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: .65rem; }
+        .messages { content-visibility: auto; }
         .message { display: flex; flex-direction: column; }
         .message .meta { font-size: .75rem; color: #7a9cc4; margin-bottom: .2rem; }
         .message .meta strong { color: #e94560; margin-right: .4rem; }
@@ -109,7 +110,6 @@ if ($activeRoomId) {
 
 <div class="chat-layout">
 
-    <!-- Oda listesi -->
     <aside class="sidebar">
         <div class="sidebar-title">Odalar</div>
         <nav class="room-list">
@@ -125,7 +125,6 @@ if ($activeRoomId) {
         </nav>
     </aside>
 
-    <!-- Chat alanı -->
     <main class="chat-main">
 
         <?php if ($activeRoom): ?>
@@ -164,7 +163,9 @@ if ($activeRoomId) {
 const USER_ID   = <?= (int) $currentUser['id'] ?>;
 const USERNAME  = <?= json_encode($currentUser['username']) ?>;
 const ROOM_ID   = <?= (int) $activeRoomId ?>;
-const WS_URL    = 'ws://localhost:8080';
+
+// Tarayıcının o an çalıştığı IP neyse otomatik olarak 8080 portundaki WebSocket'e yönlendirir.
+const WS_URL    = 'ws://' + window.location.hostname + ':8080';
 
 const messagesEl = document.getElementById('messages');
 const msgInput   = document.getElementById('msg-input');
@@ -219,7 +220,6 @@ function connect() {
         msgInput.focus();
 
         // Odaya katılımı BroadcastServer'a bildir
-        // BroadcastServer::onMessage → case 'join' → memberRepo->joinRoom()
         ws.send(JSON.stringify({ type: 'join', room_id: ROOM_ID, user_id: USER_ID }));
     };
 
@@ -257,7 +257,6 @@ function sendMessage() {
     const text = msgInput.value.trim();
     if (!text || !ws || ws.readyState !== WebSocket.OPEN) return;
 
-    // BroadcastServer::onMessage → case 'message' → msgRepo->saveMessage()
     ws.send(JSON.stringify({
         type:     'message',
         room_id:  ROOM_ID,

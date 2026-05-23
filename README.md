@@ -108,5 +108,24 @@ $memberRepo = new RoomMemberRepository();
 $memberRepo->joinRoom($roomId, $userId);
 ```
 
-## Klasör Yapısı
->>>>>>> feature/database
+
+
+
+// LATEST UPDATE
+# PHP-LiveChat & WebSocket Broadcast Server
+
+A real-time, multi-room chat application built with PHP, Ratchet WebSocket, MySQL, and Docker.
+
+---
+
+## 💻 1. Setup and Run with Docker (Recommended Method)
+
+The entire project infrastructure—including dependencies, database drivers, web servers, and the WebSocket layer—has been containerized and fully integrated by **Eda (DevOps & Integration)**. You do not need to perform any manual PHP or MySQL configurations on your local machine.
+
+### Prerequisites
+* Ensure that **Docker Desktop** is installed and running on your system.
+
+### Steps to Run
+Open your terminal or PowerShell, navigate to the project's root directory, and run the following single command:
+```sh
+docker compose up -d --build
